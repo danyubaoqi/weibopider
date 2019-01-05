@@ -25,6 +25,7 @@ class WeiboLogin():
         #os.system('pkill -f phantom')
         option=webdriver.ChromeOptions()
         option.add_argument("--headless")
+
         self.url = 'https://passport.weibo.cn/signin/login?entry=mweibo&r=https://weibo.cn/'
         self.browser = webdriver.Chrome(options=option)
         self.browser.set_window_size(1050, 840)
