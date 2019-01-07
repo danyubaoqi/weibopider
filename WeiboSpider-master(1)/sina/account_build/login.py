@@ -12,18 +12,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from os import listdir
 import sys
+
 sys.path.append(os.getcwd())
 LOCAL_MONGO_HOST = '127.0.0.1'
 LOCAL_MONGO_PORT = 27017
-DB_NAME = 'Sina'
+DB_NAME = 'Movie'
 
 TEMPLATES_FOLDER = os.getcwd() + '/sina/account_build/templates/'
 
 
 class WeiboLogin():
     def __init__(self, username, password):
-        #os.system('pkill -f phantom')
-        option=webdriver.ChromeOptions()
+        # os.system('pkill -f phantom')
+        option = webdriver.ChromeOptions()
         option.add_argument("--headless")
 
         self.url = 'https://passport.weibo.cn/signin/login?entry=mweibo&r=https://weibo.cn/'
@@ -82,19 +83,16 @@ class WeiboLogin():
 
     def is_pixel_equal(self, image1, image2, x, y):
 
-
         pixel1 = image1.load()[x, y]
         pixel2 = image2.load()[x, y]
         threshold = 20
         if abs(pixel1[0] - pixel2[0]) < threshold and abs(pixel1[1] - pixel2[1]) < threshold and abs(
-                        pixel1[2] - pixel2[2]) < threshold:
+                pixel1[2] - pixel2[2]) < threshold:
             return True
         else:
             return False
 
     def same_image(self, image, template):
-
-
 
         threshold = 0.99
         count = 0
@@ -114,7 +112,6 @@ class WeiboLogin():
         for template_name in listdir(TEMPLATES_FOLDER):
             template = Image.open(TEMPLATES_FOLDER + template_name)
             if self.same_image(image, template):
-
                 numbers = [int(number) for number in list(template_name.split('.')[0])]
                 print('拖动顺序', numbers)
                 return numbers
@@ -148,7 +145,6 @@ class WeiboLogin():
 
         self.open()
 
-
         # try:
         #     image = self.get_image('captcha.png')
         #
@@ -167,7 +163,7 @@ class WeiboLogin():
 
 if __name__ == '__main__':
 
-    file_path =  'account.txt'
+    file_path = 'account.txt'
     with open(file_path, 'r') as f:
         lines = f.readlines()
     mongo_client = pymongo.MongoClient(LOCAL_MONGO_HOST, LOCAL_MONGO_PORT)

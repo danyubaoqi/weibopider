@@ -18,8 +18,10 @@ class WeiboSpider(Spider):
 
     def start_requests(self):
         start_uids = [
-            '2803301701',  # 人民日报
-            '1699432410'  # 新华社
+            '1757353251',  # 人民日报
+            '5240067500',  # 新华社,
+            "2733853085",
+            "1843443790"
         ]
         for uid in start_uids:
             yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
